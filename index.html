@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Pagination分页组件二次开发</title>
+</head>
+<body>
+<style>
+table {
+  width: 100%;
+}
+table td {
+  height: 40px;
+  color: #333;
+  text-align: center;
+  vertical-align: middle;
+}
+table, td {
+  border: 1px solid #e5e5e5;
+}
+tr:nth-of-type(2n+1) {
+  background: #f5f5f5;
+}
+tr:first-child td {
+  height: 30px;
+}
+
+</style>
+<table border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+  <tr>
+    <td>参数名</td>
+    <td>描述</td>
+    <td>参数值</td>
+  </tr>
+  <tr>
+    <td>min_page</td>
+    <td>最小页数</td>
+    <td>可选参数，整数</td>
+  </tr>
+  <tr>
+    <td>max_page</td>
+    <td>最大页数</td>
+    <td>可选参数，整数</td>
+  </tr>
+  <tr>
+    <td>maxentries</td>
+    <td>总条目数</td>
+    <td>必选参数，整数</td>
+  </tr>
+  <tr>
+    <td>items_per_page</td>
+    <td>每页显示的条目数</td>
+    <td>可选参数，默认是10</td>
+  </tr>
+  <tr>
+    <td>num_display_entries</td>
+    <td>连续分页主体部分显示的分页条目数</td>
+    <td>可选参数，默认是10</td>
+  </tr>
+  <tr>
+    <td>current_page</td>
+    <td>当前选中的页面</td>
+    <td>可选参数，默认是0，表示第1页</td>
+  </tr>
+  <tr>
+    <td>num_edge_entries</td>
+    <td>两侧显示的首尾分页的条目数</td>
+    <td>可选参数，默认是0</td>
+  </tr>
+  <tr>
+    <td>link_to</td>
+    <td>分页的链接</td>
+    <td>字符串，可选参数，默认是"#"</td>
+  </tr>
+  <tr>
+    <td>prev_text</td>
+    <td>“前一页”分页按钮上显示的文字</td>
+    <td>字符串参数，可选，默认是"上一页"</td>
+  </tr>
+  <tr>
+    <td>next_text</td>
+    <td>“下一页”分页按钮上显示的文字</td>
+    <td>字符串参数，可选，默认是"下一页"</td>
+  </tr>
+  <tr>
+    <td>ellipse_text</td>
+    <td>省略的页数用什么文字表示</td>
+    <td>可选字符串参数，默认是"..."</td>
+  </tr>
+  <tr>
+    <td>prev_show_always</td>
+    <td>是否显示“前一页”分页按钮</td>
+    <td>布尔型，可选参数，默认为true，即显示“前一页”按钮</td>
+  </tr>
+  <tr>
+    <td>next_show_always</td>
+    <td>是否显示“下一页”分页按钮</td>
+    <td>布尔型，可选参数，默认为true，即显示“下一页”按钮</td>
+  </tr>
+  <tr>
+    <td>callback</td>
+    <td>回调函数</td>
+    <td>默认无执行效果</td>
+  </tr>
+</tbody></table>
+  <div id="page">
+    <div id="searchinfos"></div>
+    <div class='pagination mt20 ' id='Pagination'></div>
+  </div>
+</div>
+<script type="text/javascript">
+  $("#Pagination").pagination({
+      callback: function(page, jq, setMaxPageCallBack) {
+          $.ajax({
+              url: "url",
+              data: {
+                id:1,
+                page:2
+              },
+              type:"post",
+              dataType:"json",
+              success: function(result) {
+                  // 渲染数据展示
+                  $("#searchinfos").html(result.html);
+                  // 设置分页中最大的页码
+                  setMaxPageCallBack(result.total_page);
+              }
+          });
+      }
+  });
+</script>
+</body>
+</html>
